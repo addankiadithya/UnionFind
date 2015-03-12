@@ -1,3 +1,9 @@
+/*
+ * Project 2: Union-Find
+ * 
+ * Algorithms- Dr. Zhong-Hui Duan
+ */
+
 /**
  * @author : Adithya Addanki (aa207)
  */
@@ -36,7 +42,7 @@ UnionFind(String args[]){
 private String[] args;
 private Scanner inFile;
 private Random r;
-static private int fileNum=0;
+static private int fileNum=1;
 
 /* Point of entry for the Union Find Algorithm */
 public static void main(String ar[])
@@ -189,7 +195,7 @@ private boolean printClusters(ArrayList<Node> site,int boardLength) throws IOExc
 	HashSet<Integer> hs= new HashSet<Integer>();
 	for(int i=0;i<site.size();i++)
 	{
-		if(site.get(i).clusterId!=-1)
+		if(site.get(i).nodeVal==1 && site.get(i).clusterId!=-1)
 			hs.add(site.get(i).clusterId);
 //		System.out.print((site.get(i).clusterId)+"\t");
 //		if((i+1)%boardLength==0)
@@ -222,7 +228,8 @@ private boolean doesPercolate(ArrayList<Node> site,HashSet<Integer> hs,int board
 		for(int i=0;i<boardLength ;i++)
 		{
 			int clus=site.get(i).clusterId;
-			if(clus!=-1 && clus==hsCp.get(is))
+			int nodval=site.get(i).nodeVal;
+			if(nodval==1 && clus!=-1 && clus==hsCp.get(is))
 				{
 					priClus=clus;
 					break;
@@ -231,7 +238,8 @@ private boolean doesPercolate(ArrayList<Node> site,HashSet<Integer> hs,int board
 		for(int j=site.size()-1;j>site.size()-boardLength-1;j--)
 		{
 			int clus=site.get(j).clusterId;
-				if(priClus==clus)
+			int nodval=site.get(j).nodeVal;
+				if( nodval ==1 && priClus==clus)
 				{
 					perc= true;
 					break;
@@ -253,7 +261,7 @@ private boolean doesPercolate(ArrayList<Node> site,HashSet<Integer> hs,int board
 		else
 		{
 			x=x % 255;
-			pw.print(x+" "+x+" "+x+" ");
+			pw.print(x+" "+x+" "+0+" ");
 		}
 		
 		if((rgb+1)%boardLength==0)
@@ -379,6 +387,7 @@ private void percolcationRate() throws Exception
 	UnionFind uf= new UnionFind(fileNames[prC]);
 	int pc=uf.buildClusters();
 	percolationRate+=pc;
+	System.out.println(fileNames[prC]);
 	System.out.println("**********");
 	}
 	System.out.println();
